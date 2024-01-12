@@ -45,8 +45,8 @@ def image_to_text(img_dir, output_dir, file):
         # resize image
         small_img = cv2.resize(img, dsize)
         crop_img = small_img[300:400, 220:1400]
-        #cv2.imshow("address", crop_img)
-        #cv2.waitKey(0)
+        cv2.imshow("address", crop_img)
+        cv2.waitKey(0)
         img = cv2.cvtColor(crop_img, cv2.COLOR_BGR2RGB)
         config = r'--oem 3 --psm 6 -c page_separator='''
         text = pytesseract.image_to_string(img, lang='rus', config=config).replace("\n", " ").strip()
@@ -75,6 +75,11 @@ def main():
     main_dir = os.getcwd()
     input_dir = os.path.join(main_dir, "pdfs")
     img_dir = os.path.join(main_dir, "img")
+    words_dir = os.path.join(main_dir, "words")
+    if not os.path.exists(img_dir):
+        os.mkdir(img_dir)
+    if not os.path.exists(words_dir):
+        os.mkdir(words_dir)
     dir_pdf(input_dir, img_dir, main_dir)
     dirs = glob.glob(os.path.join(img_dir, r'*'))
     for i in dirs:
